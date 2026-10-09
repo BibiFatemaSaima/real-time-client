@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
+
 const Home = () => {
   return (
     <div>
-      {/* Hero Section */}
       <section className="bg-base-200">
         <div className="max-w-7xl mx-auto px-6 py-20 text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6">
@@ -14,15 +15,18 @@ const Home = () => {
           </p>
 
           <div className="flex justify-center gap-4">
-            <button className="btn btn-primary">Get Started</button>
+            <Link to="/dashboard/workspaces" className="btn btn-primary">
+              Get Started
+            </Link>
 
-            <button className="btn btn-outline">Learn More</button>
+            <a href="#features" className="btn btn-outline">
+              Learn More
+            </a>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16">
+      <section id="features" className="py-16 scroll-mt-20">
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-10">Features</h2>
 
