@@ -9,7 +9,9 @@ const Boards = () => {
   useEffect(() => {
     const loadBoards = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/boards/all");
+        const response = await axios.get(
+          "https://real-time-server-project3.vercel.app/boards/all",
+        );
 
         setBoards(response.data);
       } catch (error) {

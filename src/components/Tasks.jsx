@@ -8,7 +8,9 @@ const Tasks = () => {
 
   const loadTasks = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/cards/all");
+      const response = await axios.get(
+        "https://real-time-server-project3.vercel.app/cards/all",
+      );
 
       setTasks(response.data);
     } catch (error) {

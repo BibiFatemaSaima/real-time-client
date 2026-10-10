@@ -26,7 +26,7 @@ const WorkspaceDetails = () => {
     const loadWorkspace = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/workspaces/${id}`,
+          `https://real-time-server-project3.vercel.app/workspaces/${id}`,
         );
 
         setWorkspace(response.data);
@@ -44,7 +44,7 @@ const WorkspaceDetails = () => {
   const loadBoards = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/boards?workspaceId=${id}`,
+        `https://real-time-server-project3.vercel.app/boards?workspaceId=${id}`,
       );
 
       setBoards(response.data);
@@ -75,7 +75,10 @@ const WorkspaceDetails = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/boards", boardData);
+      await axios.post(
+        "https://real-time-server-project3.vercel.app/boards",
+        boardData,
+      );
 
       await loadBoards();
 
@@ -103,10 +106,13 @@ const WorkspaceDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/boards/${selectedBoard._id}`, {
-        name: editBoardName,
-        description: editBoardDescription,
-      });
+      await axios.put(
+        `https://real-time-server-project3.vercel.app/boards/${selectedBoard._id}`,
+        {
+          name: editBoardName,
+          description: editBoardDescription,
+        },
+      );
 
       alert("Board updated successfully");
 
@@ -131,7 +137,9 @@ const WorkspaceDetails = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:3000/boards/${boardId}`);
+      await axios.delete(
+        `https://real-time-server-project3.vercel.app/boards/${boardId}`,
+      );
 
       alert("Board deleted successfully");
 

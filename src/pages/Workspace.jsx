@@ -15,7 +15,9 @@ const Workspace = () => {
 
   const loadWorkspaces = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/workspaces");
+      const response = await axios.get(
+        "https://real-time-server-project3.vercel.app/workspaces",
+      );
 
       setWorkspaces(response.data);
     } catch (error) {
@@ -47,7 +49,7 @@ const Workspace = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/workspaces",
+        "https://real-time-server-project3.vercel.app/workspaces",
         workspaceData,
       );
 

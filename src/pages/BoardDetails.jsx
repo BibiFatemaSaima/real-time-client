@@ -64,7 +64,9 @@ const BoardDetails = () => {
   useEffect(() => {
     const loadBoard = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/boards/${id}`);
+        const response = await axios.get(
+          `https://real-time-server-project3.vercel.app/boards/${id}`,
+        );
 
         setBoard(response.data);
       } catch (error) {
@@ -81,7 +83,7 @@ const BoardDetails = () => {
   // Socket.io
   // =========================
   useEffect(() => {
-    const newSocket = io("http://localhost:3000");
+    const newSocket = io("https://real-time-server-project3.vercel.app/");
 
     setSocket(newSocket);
 
@@ -156,7 +158,7 @@ const BoardDetails = () => {
       setListsLoading(true);
 
       const response = await axios.get(
-        `http://localhost:3000/lists?boardId=${id}`,
+        `https://real-time-server-project3.vercel.app/lists?boardId=${id}`,
       );
 
       const loadedLists = response.data;
@@ -168,7 +170,7 @@ const BoardDetails = () => {
       for (const list of loadedLists) {
         try {
           const cardResponse = await axios.get(
-            `http://localhost:3000/cards?listId=${list._id}`,
+            `https://real-time-server-project3.vercel.app/cards?listId=${list._id}`,
           );
 
           cardData[list._id] = cardResponse.data;
@@ -199,7 +201,7 @@ const BoardDetails = () => {
   const loadActivities = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/activities?boardId=${id}`,
+        `https://real-time-server-project3.vercel.app/activities?boardId=${id}`,
       );
 
       setActivities(response.data);
@@ -217,7 +219,7 @@ const BoardDetails = () => {
   const loadComments = async (cardId) => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/comments?cardId=${cardId}`,
+        `https://real-time-server-project3.vercel.app/comments?cardId=${cardId}`,
       );
 
       setComments(response.data);
@@ -236,7 +238,7 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/lists", {
+      await axios.post("https://real-time-server-project3.vercel.app/lists", {
         name: listName,
         boardId: id,
       });
@@ -267,9 +269,12 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/lists/${editingList._id}`, {
-        name: editListName,
-      });
+      await axios.put(
+        `https://real-time-server-project3.vercel.app/lists/${editingList._id}`,
+        {
+          name: editListName,
+        },
+      );
 
       setEditingList(null);
       setEditListName("");
@@ -294,7 +299,9 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:3000/lists/${listId}`);
+      await axios.delete(
+        `https://real-time-server-project3.vercel.app/lists/${listId}`,
+      );
 
       loadLists();
       loadActivities();
@@ -324,7 +331,7 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.post("http://localhost:3000/cards", {
+      await axios.post("https://real-time-server-project3.vercel.app/cards", {
         title: cardTitle,
         description: cardDescription,
         listId: selectedListId,
@@ -364,11 +371,14 @@ const BoardDetails = () => {
     if (!commentText.trim() || !selectedCard) return;
 
     try {
-      await axios.post("http://localhost:3000/comments", {
-        cardId: selectedCard._id,
-        boardId: id,
-        text: commentText.trim(),
-      });
+      await axios.post(
+        "https://real-time-server-project3.vercel.app/comments",
+        {
+          cardId: selectedCard._id,
+          boardId: id,
+          text: commentText.trim(),
+        },
+      );
 
       setCommentText("");
       await loadComments(selectedCard._id);
@@ -387,11 +397,14 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/cards/${selectedCard._id}`, {
-        dueDate,
-        labels,
-        assignee,
-      });
+      await axios.put(
+        `https://real-time-server-project3.vercel.app/cards/${selectedCard._id}`,
+        {
+          dueDate,
+          labels,
+          assignee,
+        },
+      );
 
       setShowCardDetails(false);
       setSelectedCard(null);
@@ -454,13 +467,16 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/cards/${editingCard._id}`, {
-        title: editCardTitle,
-        description: editCardDescription,
-        dueDate: editCardDueDate,
-        labels: editCardLabels,
-        assignee: editCardAssignee,
-      });
+      await axios.put(
+        `https://real-time-server-project3.vercel.app/cards/${editingCard._id}`,
+        {
+          title: editCardTitle,
+          description: editCardDescription,
+          dueDate: editCardDueDate,
+          labels: editCardLabels,
+          assignee: editCardAssignee,
+        },
+      );
 
       setEditingCard(null);
 
@@ -481,7 +497,9 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.delete(`http://localhost:3000/cards/${card._id}`);
+      await axios.delete(
+        `https://real-time-server-project3.vercel.app/cards/${card._id}`,
+      );
 
       setSelectedCard(null);
       setShowCardDetails(false);
@@ -519,9 +537,12 @@ const BoardDetails = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3000/cards/${cardId}`, {
-        listId: newListId,
-      });
+      await axios.put(
+        `https://real-time-server-project3.vercel.app/cards/${cardId}`,
+        {
+          listId: newListId,
+        },
+      );
 
       loadLists();
       loadActivities();
