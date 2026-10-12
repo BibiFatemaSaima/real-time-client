@@ -83,21 +83,29 @@ const BoardDetails = () => {
   // Socket.io
   // =========================
   useEffect(() => {
-    const newSocket = io("https://real-time-server-project3.vercel.app/");
+    const newSocket = io("https://real-time-server-project3.vercel.app", {
+      transports: ["websocket"],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      timeout: 10000,
+    });
 
     setSocket(newSocket);
 
-    newSocket.emit("join-board", id);
+    newSocket.on("connect", () => {
+      console.log("Socket connected:", newSocket.id);
+      newSocket.emit("join-board", id);
+    });
+
+    newSocket.on("connect_error", (error) => {
+      console.error("Socket connection failed:", error.message);
+    });
 
     newSocket.on("card-created", (newCard) => {
       setCards((prev) => {
         const listCards = prev[newCard.listId] || [];
 
-        const alreadyExists = listCards.some(
-          (card) => card._id === newCard._id,
-        );
-
-        if (alreadyExists) {
+        if (listCards.some((card) => card._id === newCard._id)) {
           return prev;
         }
 
@@ -147,6 +155,7 @@ const BoardDetails = () => {
 
     return () => {
       newSocket.disconnect();
+      setSocket(null);
     };
   }, [id]);
 
